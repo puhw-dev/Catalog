@@ -1,0 +1,17 @@
+**/*~
+**/*.bak
+**/*.out
+**/*.lock
+**/*.log
+**/*.sqlite
+**/*.swp
+**/*.swo
+**/**.o
+**/#*#
+nbproject
+/build
+/dist
+/lib
+/Makefile
+/makefile
+/.dep.inc
