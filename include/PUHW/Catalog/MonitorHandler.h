@@ -14,7 +14,10 @@ namespace PUHW {
 		
 		class MonitorHandler: public ::Poco::Net::HTTPRequestHandler {
 			public:
+			explicit MonitorHandler(const std::string& id) : monitorID(id) {}
 			void handleRequest(::Poco::Net::HTTPServerRequest& request, ::Poco::Net::HTTPServerResponse& response) override;
+			private:
+			const ::std::string monitorID;
 		};
 	} // namespace Catalog
 } // namespace PUHW
