@@ -25,9 +25,7 @@ namespace PUHW {
 			msg.append(req);
 			logBcast("information",msg.c_str());
 			if(method == "GET") {
-				logBcast("debug","pre dbsession init");
 				::Poco::Data::Session dbsession("SQLite", (dynamic_cast<CatalogServer&>(::Poco::Util::ServerApplication::instance())).getDBPath());
-				logBcast("debug","post dbsession init");
 				::Poco::Data::Statement select(dbsession);
 				Monitors monitors;
 				select << "SELECT * FROM MONITORS", into(monitors), now;
