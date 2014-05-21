@@ -1,5 +1,21 @@
 --------------------------------
-0.1
+v0.2
 =========
-
+* obtaining parameters of specified monitor with GET /monitors/{monitor-id}
+* modifying parameters of specified monitor with POST /monitors/{monitor-id}
+* deleting specified monitor from registry with DELETE /monitors/{monitor-id}
+* searching for monitors that match their names with specified search phrase with GET /search?monitor-name={searchPhrase}
+* improved logging
+* updated program's help - links to websites of the project
+--------------------------------
+********************************
+--------------------------------
+v0.1
+=========
+* working, configurable HTTP server
+* logging facilities
+* handling command-line options
+* SQLite database provides registry
+* obtaining list of registered monitors with GET /monitors
+* registering new monitor with POST /monitors
 --------------------------------
