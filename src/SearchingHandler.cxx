@@ -22,7 +22,7 @@ namespace PUHW {
 			::Poco::URI requestURI(request.getURI());
 			::std::string requestPathAndQuery = requestURI.getPathAndQuery();
 			::std::string req(method);
-			req.append.append(" ").append(requestPathAndQuery);
+			req.append(" ").append(requestPathAndQuery);
 			::std::string msg("SearchingHandler is handling ");
 			msg.append(req).append(" with searched phrase \"").append(searchedPhrase).append("\".");
 			logBcast("information",msg.c_str());
@@ -31,7 +31,9 @@ namespace PUHW {
 			::Poco::Data::Session dbsession("SQLite", (dynamic_cast<CatalogServer&>(::Poco::Util::ServerApplication::instance())).getDBPath());
 			if(method == "GET") {
 				Monitors monitors;
-				select << "SELECT * FROM MONITORS WHERE name LIKE '%:name%'", into(monitors), use(searchedPhrase), now;
+				::std::string query("SELECT * FROM MONITORS WHERE name LIKE '%");
+				query.append(searchedPhrase).append("%'");
+				dbsession << query, into(monitors), now;
 				response.setChunkedTransferEncoding(true);
 				response.setContentType("text/plain"); // or "application/json" ?
 				response.setStatus(status);
