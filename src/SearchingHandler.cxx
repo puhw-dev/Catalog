@@ -59,9 +59,11 @@ namespace PUHW {
 				logBcast("information","Unsupported method");
 				response.send();
 			} // handling other methods
+			// finalizing
 			dbsession.close();
 			msg.append("Finished handling request: ").append(req).append(" with status ").append(::std::to_string(status));
 			logBcast("information",msg.c_str());
+			msg.clear();
 		} // handleRequest()
 	} // namespace Catalog
 } // namespace PUHW
