@@ -22,7 +22,7 @@ namespace PUHW {
 			::Poco::URI requestURI(request.getURI());
 			::std::string requestPath = requestURI.getPath();
 			::std::string req(method);
-			req.append(requestPath);
+			req.append(" ").append(requestPath);
 			::std::string msg("MonitorHandler is handling ");
 			msg.append(req);
 			logBcast("information",msg.c_str());
