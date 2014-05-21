@@ -9,9 +9,7 @@
 #include <Poco/Net/HTTPRequestHandler.h>
 
 namespace PUHW {
-	namespace Catalog {
-		//class CatalogServer;
-		
+	namespace Catalog {		
 		class MonitorHandler: public ::Poco::Net::HTTPRequestHandler {
 			public:
 			explicit MonitorHandler(const std::string& id) : monitorID(id) {}

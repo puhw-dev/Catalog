@@ -30,9 +30,8 @@ namespace PUHW {
 			::Poco::Net::HTTPResponse::HTTPStatus status = ::Poco::Net::HTTPResponse::HTTPStatus::HTTP_OK;
 			::Poco::Data::Session dbsession("SQLite", (dynamic_cast<CatalogServer&>(::Poco::Util::ServerApplication::instance())).getDBPath());
 			if(method == "GET") {
-				::Poco::Data::Statement select(dbsession);
 				Monitors monitors;
-				select << "SELECT * FROM MONITORS WHERE name=:name", into(monitors), use(monitorID), now;
+				dbsession << "SELECT * FROM MONITORS WHERE name=:name", into(monitors), use(monitorID), now;
 				if(monitors.empty()) {
 					status = ::Poco::Net::HTTPResponse::HTTPStatus::HTTP_GONE;
 					::std::string reason("No registered monitor with name \"");
@@ -73,7 +72,11 @@ namespace PUHW {
 					bool parsedSuccess = reader.parse(body,root,false);
 					if(body.empty() || !parsedSuccess) {
 						status = ::Poco::Net::HTTPResponse::HTTPStatus::HTTP_BAD_REQUEST;
-						response.setStatusAndReason(status,reader.getFormatedErrorMessages());
+						msg.append("Parsing error: ");
+						if(body.empty()) msg.append("request body is empty");
+						else msg.append(reader.getFormatedErrorMessages());
+						response.setStatusAndReason(status,msg);
+						msg.clear();
 						response.send();
 					}
 					else { // non - empty body and parsed successfully
@@ -101,11 +104,10 @@ namespace PUHW {
 										response.setStatusAndReason(status,"Expected non-empty string 'ip'");
 										response.send();
 									}
-									else { // given ip address is a non-empty string
-										logBcast("debug","update");
+									else { // given ip address is valid
 										dbsession << "UPDATE MONITORS SET ip = :ip WHERE name = :name", use(monitorIP), use(monitorID), now;
 										response.send();
-									}
+									} // given ip address is valid
 								} // value for key 'ip' is a string
 							} // there is non-empty element 'ip' in the dictionary
 						} // root element of body of request is a dictionary
@@ -133,9 +135,11 @@ namespace PUHW {
 				logBcast("information","Unsupported method");
 				response.send();
 			} // handling other methods
+			// finalizing
 			dbsession.close();
 			msg.append("Finished handling request: ").append(req).append(" with status ").append(::std::to_string(status));
 			logBcast("information",msg.c_str());
+			msg.clear();
 		} // handleRequest()
 	} // namespace Catalog
 } // namespace PUHW

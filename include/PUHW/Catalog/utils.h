@@ -16,7 +16,7 @@ namespace PUHW {
 		template <typename T>
 		void broadcastLog(const ::std::string& type, const char* message, const char* file = "", int line = -1) {
 			try {
-				T& loggersOwner = dynamic_cast<T&>(::Poco::Util::Application::instance());
+				T& loggersOwner = dynamic_cast<T&>(::Poco::Util::ServerApplication::instance());
 				for(auto logger : loggersOwner.getLoggers()) {
 					callProperLoggerMethod(logger,type,message,file,line);
 				}
