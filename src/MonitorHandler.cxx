@@ -128,7 +128,8 @@ namespace PUHW {
 				}
 			} // handling DELETE
 			else { // handling other methods
-				response.setStatusAndReason(::Poco::Net::HTTPResponse::HTTPStatus::HTTP_NOT_IMPLEMENTED,"Requested URI does not handle this method (it handles GET, POST, and DELETE requests only).");
+				status = ::Poco::Net::HTTPResponse::HTTPStatus::HTTP_NOT_IMPLEMENTED;
+				response.setStatusAndReason(status,"Requested URI does not handle this method (it handles GET, POST, and DELETE requests only).");
 				logBcast("information","Unsupported method");
 				response.send();
 			} // handling other methods
