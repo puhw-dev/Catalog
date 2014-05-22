@@ -1,4 +1,11 @@
 --------------------------------
+v0.3
+=========
+* Changed structure of source files to ease building external library jsoncpp with qmake
+* Added build instructions in INSTALL.txt
+--------------------------------
+********************************
+--------------------------------
 v0.2
 =========
 * obtaining parameters of specified monitor with GET /monitors/{monitor-id}

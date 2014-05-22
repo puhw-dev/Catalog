@@ -8,10 +8,14 @@
 **/*.swo
 **/**.o
 **/#*#
+**/Makefile
+**/makefile
 nbproject
 /build
 /dist
-/Makefile
-/makefile
 /.dep.inc
 **/*.pro.user
+/bin
+/core/obj/
+/lib/jsoncpp/libjsoncpp.a
+/lib/jsoncpp/obj/
