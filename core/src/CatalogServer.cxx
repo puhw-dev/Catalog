@@ -23,7 +23,7 @@ using ::Poco::Data::use;
 namespace PUHW {
 	namespace Catalog {
 
-		CatalogServer::CatalogServer() : ::Poco::Util::ServerApplication(), port(10666), maxQueuedConnections(32), maxThreads(4), version("0.2"), logPath("http-catalog-server.log"), exitImmediately(false), dbPath("catalog-database.sqlite"), createDBIfnotExists(false), exitCode(ExitCode::EXIT_OK) {
+		CatalogServer::CatalogServer() : ::Poco::Util::ServerApplication(), port(10666), maxQueuedConnections(32), maxThreads(4), version("0.3"), logPath("http-catalog-server.log"), exitImmediately(false), dbPath("catalog-database.sqlite"), createDBIfnotExists(false), exitCode(ExitCode::EXIT_OK) {
 			/* register subsystems here*/
 		}
 
