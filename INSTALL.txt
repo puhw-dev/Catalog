@@ -1,0 +1,30 @@
+----- BUILDING INSTRUCTIONS -----
+
+=== DEFINITIONS ===
+{PROJECT_HOME} is path to main directory of the project - the one containing catalog.pro file.
+
+
+=== PREREQUISITES ===
+To build Catalog you need to have following libraries installed:
+- PocoNet, PocoUtil, PocoFoundation, PocoData, PocoSQLite from POCO C++ Libraries http://pocoproject.org
+- boost_regex from BOOST C++ Libraries www.boost.org
+
+The easiest and quickest way of installing these libraries is to download binary distribution for your OS.
+Binary distribution of these can be found in Debian / Ubuntu repositories - search for libboost-all-dev and libpoco-dev.
+
+NOTE: If you place these libraries outside default search path, make sure you set up environment variable LD_LIBRARY_PATH=<dir>:$LD_LIBRARY_PATH 
+and add these: 'LIBS += -L<dir>' to {PROJECT_HOME}/core/core.pro, replacing <dir> with absolute path to directory containing these libraries.
+
+=== BUILDING USING QMAKE ===
+Qmake is a free, cross-platform makefile generator. It comes with Qt - http://qt-project.org
+Building catalog using Qmake is very simple. All that needs to be done is 3 steps.
+1. Change directory to {PROJECT_HOME}
+2. execute `qmake` - this will generate platform-specific Makefile
+3. execute `make`
+The executable file will be created in {PROJECT_HOME}/bin/
+
+
+----- RUNNING INSTRUCTIONS -----
+First change directory to {PROJECT_HOME}/bin/
+`catalog_server -p55555 --create-db` will run the server on port 55555, creating empty SQLite database (if it doesn't exist yet) and log file with default name.
+For additional help and server configuration see `catalog_server -h`
