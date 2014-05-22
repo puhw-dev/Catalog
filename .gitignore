@@ -11,9 +11,7 @@
 nbproject
 /build
 /dist
-/lib
 /Makefile
 /makefile
 /.dep.inc
-/catalog.pro
-/catalog.pro.user
+**/*.pro.user
