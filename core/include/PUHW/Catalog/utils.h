@@ -9,7 +9,7 @@ namespace PUHW {
 	namespace Catalog {
 
 		#define logBcast(type,message) \
-			broadcastLog<::PUHW::Catalog::CatalogServer>(type,message,__FILE__,__LINE__)
+			broadcastLog< ::PUHW::Catalog::CatalogServer>(type,message,__FILE__,__LINE__)
 		
 		void callProperLoggerMethod(::Poco::Logger* logger, const ::std::string& type, const char* message, const char* file = "", int line = -1); 
 		

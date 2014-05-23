@@ -16,7 +16,7 @@ namespace PUHW {
 		class CatalogServer : public ::Poco::Util::ServerApplication {
 			public:
 			CatalogServer();
-			const ::std::list<::Poco::Logger*>& getLoggers() const;
+			const ::std::list< ::Poco::Logger*>& getLoggers() const;
 			const ::std::string& getDBPath() const { return dbPath; }
 			
 			private:
@@ -32,14 +32,14 @@ namespace PUHW {
 			void initialize(::Poco::Util::Application& self) override;
 			void checkDB();
 			void uninitialize() override;
-			int main(const ::std::vector<::std::string>&) override;
+			int main(const ::std::vector< ::std::string>&) override;
 						
 			::Poco::UInt16 port;
 			int maxQueuedConnections;
 			int maxThreads;
-			::Poco::AutoPtr<::Poco::FormattingChannel> formattingFileChannel;
-			::Poco::AutoPtr<::Poco::FormattingChannel> formattingConsoleChannel;
-			::std::list<::Poco::Logger*> loggers;
+			::Poco::AutoPtr< ::Poco::FormattingChannel> formattingFileChannel;
+			::Poco::AutoPtr< ::Poco::FormattingChannel> formattingConsoleChannel;
+			::std::list< ::Poco::Logger*> loggers;
 			const ::std::string version;
 			::std::string logPath;
 			bool exitImmediately;
