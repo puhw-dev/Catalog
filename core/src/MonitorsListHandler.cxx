@@ -97,8 +97,9 @@ namespace PUHW {
 										response.send();
 									}
 									else { // monitor with such name does not exist yet - it can be inserted now
-										::Poco::URI reqURI(request.getURI());
-										std::string href(reqURI.getAuthority());
+										// request.getHost().c_str() // returns "localhost:10666"
+										// request.serverAddress().toString().c_str() // returns "127.0.0.1:10666"
+										std::string href(request.getHost());
 										href.append("/monitors/").append(monitorName);
 										dbsession << "INSERT INTO MONITORS VALUES (NULL,:name,:ip,:href)", use(monitorName), use(monitorIP), use(href), now;
 										status = ::Poco::Net::HTTPResponse::HTTPStatus::HTTP_CREATED;
