@@ -25,7 +25,12 @@ namespace PUHW {
 				::Poco::Util::Application::instance().logger().error("Down-casting error in helper function broadcastLog. Trying to log original message with application's default logger");
 				callProperLoggerMethod(&((::Poco::Util::Application::instance()).logger()),type,message,file,line);
 			}
-		}				
+		}
+
+		bool isValidAddress(const ::std::string& address);
+		bool isValidPortNr(const ::std::string& port);
+		bool isValidMonitorName(const ::std::string& name);
+		bool isValidSearchedPhrase(const ::std::string& phrase);
 		
 	} // namespace Catalog
 } // namespace PUHW
