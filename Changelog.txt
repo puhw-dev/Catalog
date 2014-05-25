@@ -1,3 +1,10 @@
+v0.4
+=========
+* User input (name of monitor and its address) is verified with regular expressions (issue #1)
+* Attribute href contains host part (issue #2)
+* Addresses digraph problem with older gcc (issue #3)
+--------------------------------
+********************************
 --------------------------------
 v0.3
 =========

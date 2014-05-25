@@ -23,22 +23,22 @@ using ::Poco::Data::use;
 namespace PUHW {
 	namespace Catalog {
 
-		CatalogServer::CatalogServer() : ::Poco::Util::ServerApplication(), port(10666), maxQueuedConnections(32), maxThreads(4), version("0.3"), logPath("http-catalog-server.log"), exitImmediately(false), dbPath("catalog-database.sqlite"), createDBIfnotExists(false), exitCode(ExitCode::EXIT_OK) {
+		CatalogServer::CatalogServer() : ::Poco::Util::ServerApplication(), port(10666), maxQueuedConnections(32), maxThreads(4), version("0.4"), logPath("http-catalog-server.log"), exitImmediately(false), dbPath("catalog-database.sqlite"), createDBIfnotExists(false), exitCode(ExitCode::EXIT_OK) {
 			/* register subsystems here*/
 		}
 
-		const ::std::list<::Poco::Logger*>& CatalogServer::getLoggers() const { 
+		const ::std::list< ::Poco::Logger*>& CatalogServer::getLoggers() const { 
 			return loggers; 
 		}
 
 		void CatalogServer::initialize(::Poco::Util::Application& self) {
 			::Poco::Util::Application::initialize(self); // required call
-			::Poco::AutoPtr<::Poco::PatternFormatter> patternFormatter = new ::Poco::PatternFormatter("%Y-%m-%d %H:%M:%S.%i    %p\t\t%N    [%s]\t\t%t");
+			::Poco::AutoPtr< ::Poco::PatternFormatter> patternFormatter = new ::Poco::PatternFormatter("%Y-%m-%d %H:%M:%S.%i    %p\t\t%N    [%s]\t\t%t");
 			patternFormatter->setProperty("times","local"); // setting timezone to local
 
 			// creating file logger
 			formattingFileChannel = new ::Poco::FormattingChannel(patternFormatter);
-			::Poco::AutoPtr<::Poco::FileChannel> fileChannel = new ::Poco::FileChannel(logPath);
+			::Poco::AutoPtr< ::Poco::FileChannel> fileChannel = new ::Poco::FileChannel(logPath);
 			formattingFileChannel->setChannel(fileChannel);
 			formattingFileChannel->open();
 			::Poco::Logger& fileLogger = ::Poco::Logger::create("CatalogFileLogger", formattingFileChannel, ::Poco::Message::PRIO_DEBUG);
@@ -47,7 +47,7 @@ namespace PUHW {
 
 			// creating console logger
 			formattingConsoleChannel = new ::Poco::FormattingChannel(patternFormatter);	
-			::Poco::AutoPtr<::Poco::ConsoleChannel> consoleChannel = new ::Poco::ConsoleChannel();
+			::Poco::AutoPtr< ::Poco::ConsoleChannel> consoleChannel = new ::Poco::ConsoleChannel();
 			formattingConsoleChannel->setChannel(consoleChannel);
 			formattingConsoleChannel->open();
 			::Poco::Logger& consoleLogger = ::Poco::Logger::create("CatalogConsoleLogger", formattingConsoleChannel, ::Poco::Message::PRIO_DEBUG);
@@ -64,9 +64,9 @@ namespace PUHW {
 			::Poco::Data::SQLite::Connector::unregisterConnector();
 		}
 
-		int CatalogServer::main(const ::std::vector<::std::string>&) {
+		int CatalogServer::main(const ::std::vector< ::std::string>&) {
 			if(exitImmediately) { return exitCode; }
-			::Poco::AutoPtr<::Poco::Net::HTTPServerParams> serverParams = new ::Poco::Net::HTTPServerParams;
+			::Poco::AutoPtr< ::Poco::Net::HTTPServerParams> serverParams = new ::Poco::Net::HTTPServerParams;
 			serverParams->setMaxQueued(maxQueuedConnections);
 			serverParams->setMaxThreads(maxThreads);
 			::Poco::Net::ServerSocket svs(port);

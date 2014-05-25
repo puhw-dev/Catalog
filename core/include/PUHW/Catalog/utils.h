@@ -9,7 +9,7 @@ namespace PUHW {
 	namespace Catalog {
 
 		#define logBcast(type,message) \
-			broadcastLog<::PUHW::Catalog::CatalogServer>(type,message,__FILE__,__LINE__)
+			broadcastLog< ::PUHW::Catalog::CatalogServer>(type,message,__FILE__,__LINE__)
 		
 		void callProperLoggerMethod(::Poco::Logger* logger, const ::std::string& type, const char* message, const char* file = "", int line = -1); 
 		
@@ -25,7 +25,12 @@ namespace PUHW {
 				::Poco::Util::Application::instance().logger().error("Down-casting error in helper function broadcastLog. Trying to log original message with application's default logger");
 				callProperLoggerMethod(&((::Poco::Util::Application::instance()).logger()),type,message,file,line);
 			}
-		}				
+		}
+
+		bool isValidAddress(const ::std::string& address);
+		bool isValidPortNr(const ::std::string& port);
+		bool isValidMonitorName(const ::std::string& name);
+		bool isValidSearchedPhrase(const ::std::string& phrase);
 		
 	} // namespace Catalog
 } // namespace PUHW

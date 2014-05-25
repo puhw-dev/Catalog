@@ -83,9 +83,9 @@ namespace PUHW {
 							else { // values of both attributes 'name' and 'ip' are strings
 								const ::std::string monitorName(name.asString());
 								const ::std::string monitorIP(ip.asString());
-								if(monitorName.empty() || monitorIP.empty()) {
+								if(!isValidMonitorName(monitorName) || !isValidAddress(monitorIP)) {
 									status = ::Poco::Net::HTTPResponse::HTTPStatus::HTTP_BAD_REQUEST;
-									response.setStatusAndReason(status,"Expected non-empty strings 'name' and 'ip'");
+									response.setStatusAndReason(status,"String 'name' and / or 'ip' is / are not valid.");
 									response.send();
 								}
 								else { // values of both attributes 'name' and 'ip' are valid
@@ -97,8 +97,9 @@ namespace PUHW {
 										response.send();
 									}
 									else { // monitor with such name does not exist yet - it can be inserted now
-										::Poco::URI reqURI(request.getURI());
-										std::string href(reqURI.getAuthority());
+										// request.getHost().c_str() // returns "localhost:10666"
+										// request.serverAddress().toString().c_str() // returns "127.0.0.1:10666"
+										std::string href(request.getHost());
 										href.append("/monitors/").append(monitorName);
 										dbsession << "INSERT INTO MONITORS VALUES (NULL,:name,:ip,:href)", use(monitorName), use(monitorIP), use(href), now;
 										status = ::Poco::Net::HTTPResponse::HTTPStatus::HTTP_CREATED;

@@ -30,28 +30,36 @@ namespace PUHW {
 			::Poco::Net::HTTPResponse::HTTPStatus status = ::Poco::Net::HTTPResponse::HTTPStatus::HTTP_OK;
 			::Poco::Data::Session dbsession("SQLite", (dynamic_cast<CatalogServer&>(::Poco::Util::ServerApplication::instance())).getDBPath());
 			if(method == "GET") {
-				Monitors monitors;
-				::std::string query("SELECT * FROM MONITORS WHERE name LIKE '%");
-				query.append(searchedPhrase).append("%'");
-				dbsession << query, into(monitors), now;
-				response.setChunkedTransferEncoding(true);
-				response.setContentType("text/plain"); // or "application/json" ?
-				response.setStatus(status);
-				::std::ostream& ostr = response.send();
-				if(monitors.empty()) {
-					ostr << "[]"; // according to specification empty list is returned if no results found
+				if(!isValidSearchedPhrase(searchedPhrase)) {
+					status = ::Poco::Net::HTTPResponse::HTTPStatus::HTTP_BAD_REQUEST;
+					response.setStatusAndReason(status,"Invalid searched phrase.");
+					response.send();
 				}
-				else { // there are results of the query
-					Json::Value list;
-					Json::Value dict;
-					for(const Monitor& monitor : monitors) {
-						dict["name"] = monitor.get<1>();
-						dict["ip"] = monitor.get<2>();
-						dict["href"] = monitor.get<3>();
-						list.append(dict);
+				else {// searched phrase is valid
+					Monitors monitors;
+					::std::string query("SELECT * FROM MONITORS WHERE name LIKE '%");
+					query.append(searchedPhrase).append("%'");
+					dbsession << query, into(monitors), now;
+					response.setChunkedTransferEncoding(true);
+					response.setContentType("text/plain"); // or "application/json" ?
+					status = ::Poco::Net::HTTPResponse::HTTPStatus::HTTP_OK;
+					response.setStatus(status);
+					::std::ostream& ostr = response.send();
+					if(monitors.empty()) {
+						ostr << "[]"; // according to specification empty list is returned if no results found
 					}
-					ostr << list.toStyledString();
-				} // there are results of the query
+					else { // there are results of the query
+						Json::Value list;
+						Json::Value dict;
+						for(const Monitor& monitor : monitors) {
+							dict["name"] = monitor.get<1>();
+							dict["ip"] = monitor.get<2>();
+							dict["href"] = monitor.get<3>();
+							list.append(dict);
+						}
+						ostr << list.toStyledString();
+					} // there are results of the query
+				}
 			} // handling GET
 			else { // handling other methods
 				status = ::Poco::Net::HTTPResponse::HTTPStatus::HTTP_NOT_IMPLEMENTED;
