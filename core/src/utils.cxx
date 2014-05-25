@@ -55,7 +55,7 @@ namespace PUHW {
 			regex ipv4(R"((http://)?([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})(:([0-9]{1,5}))?)");
 			regex ipv6(R"((http://)?([0-9a-fA-F]{4}|0|)(:([0-9a-fA-F]{4}|0|)){3,7})");
 			regex ipv6port(R"((http://)?\[([0-9a-fA-F]{4}|0|)(:([0-9a-fA-F]{4}|0|)){3,7}\]:([0-9]{1,5}))");
-			regex domain(R"((http://)?[a-zA-Z0-9][a-zA-Z0-9\-]{2,62}(\.([a-zA-Z0-9\-]{3,63})){0,61}\.([a-zA-Z0-9\-]{0,62}[a-zA-Z0-9])(:([0-9]{1,5}))?)");
+			regex domain(R"((http://)?[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9](\.([a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9])){0,61}\.([a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9])(:([0-9]{1,5}))?)");
 			if(regex_match(address,match,ipv4)) {
 				if(::std::atoi(match[2].str().c_str()) == 0 || 0 == ::std::atoi(match[5].str().c_str())) return false; // first and last IP addr byte
 				for(size_t i = 2; i <= 5; ++i) {
@@ -88,7 +88,7 @@ namespace PUHW {
 		}
 
 		bool isValidSearchedPhrase(const ::std::string& phrase) {
-			regex phraseRegexp(R"([a-zA-Z0-9\-])");
+			regex phraseRegexp(R"([a-zA-Z0-9\-]+)");
 			return regex_match(phrase,phraseRegexp);
 		}
 	} // namespace Catalog
