@@ -29,7 +29,7 @@ namespace PUHW {
 			::Poco::URI requestURI(request.getURI());
 			const ::std::string reqURIpath = requestURI.getPath();
 			regex monitor(R"(/monitors/([a-zA-Z][a-zA-Z0-9_-]*))");
-			regex searching(R"(/search\?monitor-name=([a-zA-Z][a-zA-Z0-9_-]*))");
+			regex searching(R"(/search\?monitor-name=(.*))");
 			smatch match;
 			//::Poco::Logger& logger = ::Poco::Util::ServerApplication::instance().logger();
 			//logger.debug(requestURI.getPathAndQuery());

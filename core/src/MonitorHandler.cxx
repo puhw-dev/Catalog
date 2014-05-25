@@ -99,9 +99,9 @@ namespace PUHW {
 								}
 								else { // value for key 'ip' is a string
 									const ::std::string monitorIP(ip.asString());
-									if(monitorIP.empty()) {
+									if(!isValidAddress(monitorIP)) {
 										status = ::Poco::Net::HTTPResponse::HTTPStatus::HTTP_BAD_REQUEST;
-										response.setStatusAndReason(status,"Expected non-empty string 'ip'");
+										response.setStatusAndReason(status,"The 'ip' attribute is not a valid address.");
 										response.send();
 									}
 									else { // given ip address is valid

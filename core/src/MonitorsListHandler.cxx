@@ -83,9 +83,9 @@ namespace PUHW {
 							else { // values of both attributes 'name' and 'ip' are strings
 								const ::std::string monitorName(name.asString());
 								const ::std::string monitorIP(ip.asString());
-								if(monitorName.empty() || monitorIP.empty()) {
+								if(!isValidMonitorName(monitorName) || !isValidAddress(monitorIP)) {
 									status = ::Poco::Net::HTTPResponse::HTTPStatus::HTTP_BAD_REQUEST;
-									response.setStatusAndReason(status,"Expected non-empty strings 'name' and 'ip'");
+									response.setStatusAndReason(status,"String 'name' and / or 'ip' is / are not valid.");
 									response.send();
 								}
 								else { // values of both attributes 'name' and 'ip' are valid
