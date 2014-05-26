@@ -23,7 +23,7 @@ using ::Poco::Data::use;
 namespace PUHW {
 	namespace Catalog {
 
-		CatalogServer::CatalogServer() : ::Poco::Util::ServerApplication(), port(10666), maxQueuedConnections(32), maxThreads(4), version("0.4"), logPath("http-catalog-server.log"), exitImmediately(false), dbPath("catalog-database.sqlite"), createDBIfnotExists(false), exitCode(ExitCode::EXIT_OK) {
+		CatalogServer::CatalogServer() : ::Poco::Util::ServerApplication(), port(10666), maxQueuedConnections(32), maxThreads(4), version("0.5"), logPath("http-catalog-server.log"), exitImmediately(false), dbPath("catalog-database.sqlite"), createDBIfnotExists(false), exitCode(ExitCode::EXIT_OK) {
 			/* register subsystems here*/
 		}
 
@@ -120,18 +120,21 @@ namespace PUHW {
 			helpFmt.setUnixStyle(true);
 			helpFmt.setAutoIndent();
 			helpFmt.setCommand("catalog");
-			helpFmt.setUsage("[OPTION]...");	
+			helpFmt.setUsage("[OPTION]...");
 			helpFmt.setHeader(
 							  "Runs standalone HTTP server for cataloguing service intended to work with other modules of PUHW project (see: https://github.com/puhw-dev/doc/wiki)."
 							  "\nThis server provides REST API described at: https://github.com/puhw-dev/doc/tree/master/api."
-			                  "\nPurpose of this server is to give PUHW-monitors possibility to register in the database of this catalog in order to find the hosts monitored by them later on."
-			                 );
+							  "\nPurpose of this server is to give PUHW-monitors possibility to register in the database of this catalog in order to find the hosts monitored by them later on."
+							 );
 			helpFmt.setFooter(
 							  "Project location on github: https://github.com/puhw-dev/Catalog"
 							  "\nReport bugs on bug-tracker: https://github.com/puhw-dev/Catalog/issues"
 			                  "\nAuthor Maciej.Siczek@fis.agh.edu.pl"
 			                 );
-
+			::std::cout << "   ___  __  ____ ___      __\n"
+						   "  / _ \\/ / / / // / | /| / /  ╔═╗╔═╗╔╦╗╔═╗╦  ╔═╗╔═╗\n"
+						   " / ___/ /_/ / _  /| |/ |/ /   ║  ╠═╣ ║ ╠═╣║  ║ ║║ ╦\n"
+						   "/_/   \\____/_//_/ |__/|__/    ╚═╝╩ ╩ ╩ ╩ ╩╩═╝╚═╝╚═╝\n\n";
 			helpFmt.format(::std::cout);
 			stopOptionsProcessing();
 		}
