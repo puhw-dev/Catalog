@@ -23,7 +23,7 @@ using ::Poco::Data::use;
 namespace PUHW {
 	namespace Catalog {
 
-		CatalogServer::CatalogServer() : ::Poco::Util::ServerApplication(), port(10666), maxQueuedConnections(32), maxThreads(4), version("0.5"), logPath("http-catalog-server.log"), exitImmediately(false), dbPath("catalog-database.sqlite"), createDBIfnotExists(false), exitCode(ExitCode::EXIT_OK) {
+		CatalogServer::CatalogServer() : ::Poco::Util::ServerApplication(), port(10666), maxQueuedConnections(32), maxThreads(4), version("0.6"), logPath("http-catalog-server.log"), exitImmediately(false), dbPath("catalog-database.sqlite"), createDBIfnotExists(false), exitCode(ExitCode::EXIT_OK) {
 			/* register subsystems here*/
 		}
 
@@ -39,6 +39,12 @@ namespace PUHW {
 			// creating file logger
 			formattingFileChannel = new ::Poco::FormattingChannel(patternFormatter);
 			::Poco::AutoPtr< ::Poco::FileChannel> fileChannel = new ::Poco::FileChannel(logPath);
+			fileChannel->setProperty("rotation","512 K");
+			fileChannel->setProperty("archive","timestamp");
+			fileChannel->setProperty("times","local");
+			fileChannel->setProperty("compress","true");
+			fileChannel->setProperty("purgeAge","6 months");
+			//fileChannel->setProperty("purgeCount","3");
 			formattingFileChannel->setChannel(fileChannel);
 			formattingFileChannel->open();
 			::Poco::Logger& fileLogger = ::Poco::Logger::create("CatalogFileLogger", formattingFileChannel, ::Poco::Message::PRIO_DEBUG);
