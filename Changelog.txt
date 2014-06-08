@@ -1,3 +1,10 @@
+--------------------------------
+v0.6
+=========
+* Better management of log-files including auto splitting, compressing and deleting.
+--------------------------------
+********************************
+--------------------------------
 v0.5
 =========
 * Added easter egg :-)
